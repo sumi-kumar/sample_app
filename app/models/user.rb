@@ -1,4 +1,5 @@
 	class User < ActiveRecord::Base
+      has_many :microposts, dependent: :destroy
 
 		  attr_accessor :remember_token, :activation_token, :reset_token
 		  before_save :downcase_email
@@ -67,6 +68,11 @@
     # Returns true if a password reset has expired.
     def password_reset_expired?
       reset_sent_at < 2.hours.ago
+    end
+
+    # It will select all the microposts belonging to the current user.
+    def feed
+      Micropost.where("user_id = ?", id)
     end
 
     private
