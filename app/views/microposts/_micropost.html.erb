@@ -10,6 +10,13 @@
     <% if current_user?(micropost.user) %>
     <%= link_to "delete", micropost, method: :delete,
                                      data: { confirm: "You sure?" } %>
+      <%= render partial:  'comments/form', locals: { micropost: micropost } %>
+    <% end %>
+      <div class="col-md-8">
+    <% if micropost.comments.any? %>
+    <ol class="comments" %>
+      <%= render partial:  'comments/comments', locals: { micropost: micropost } %>
+    </ol>
     <% end %>
   </span>
 </li>
